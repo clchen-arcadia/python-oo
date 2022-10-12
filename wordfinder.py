@@ -1,12 +1,10 @@
 import random
 
-
 class WordFinder:
     """Word Finder: finds random words from a dictionary."""
-    # init
 
     def __init__(self, filepath):
-        """ Construct word finder with input of file. Prints words read """
+        """ Construct word finder with input filepath. Prints words read """
         self.filepath = filepath
         self.words = []
         self.get_words(self.get_lines())
@@ -15,45 +13,52 @@ class WordFinder:
     def __repr__(self):
         return f"<Word file's file is {self.filepath}>"
 
-    def getLines(self):
+    def get_lines(self):
         """Open the file passed in. Return a list of lines that are not empty"""
+        # print('test hello world!')
         file = open(self.filepath)
-        #TODO: readlines()
-        readText = file.read().splitlines()
-        textNoEmptyLine = [line for line in readText if line != ""]
-        text.close()
-        return textNoEmptyLine
+        # print('file is', file)
+        lines = file.readlines()
+        # for line in file.read():
+        #     print("line is", line)
+        print("lines from readlines", lines)
+        text_cleaned = [line[:-1] for line in lines if line[:-1] != ""]
+        file.close()
+        print(text_cleaned)
+        return text_cleaned
 
-    def getWords(self, listLines):
+    def get_words(self, list_lines):
         """Input a list of lines and return a list of words"""
-        for line in listLines:
-            listOfWords = line.split(" ")
-            self.words.extend(listOfWords)
+        for line in list_lines:
+            words_list = line.split(" ")
+            self.words.extend(words_list)
 
-    def countWords(self):
+    def count_words(self):
         """Return the number of words in list"""
         return len(self.words)
 
     def random(self):
-        """Call choice from "random" library. Return a word from list of words"""
+        """Return a random word from list of words"""
         return random.choice(self.words)
 
 
 class SpecialWordFinder(WordFinder):
     """Special Word Finder: Reads files and ignore comment lines"""
 
-    # def __init__(self, file):
-    # """Create a special word finder with an input of file and disregards any empty or comment lines"""
-    # self.file = file
-    # self.words = []
-    # self.getWords(self.filterList(self.getLines()))
-    # print(f"{self.countWords()} words read")
+    def __init__(self, filepath):
+        """Create a special word finder with an input of file and disregards any empty or comment lines"""
+        super().__init__(self, filepath)
 
-    def getLines(self, lines):
-        return [line for line in lines if line[0] != "#"]
+    def get_lines(self):
+        """Calls super method of the same name and filters and returns it"""
+        parent_list = self.super().get_lines()
+        return [line for line in parent_list if line[0] != "#"]
 
 
-# original findWords
+
+
+# original findWords Code, deprecated
+#
     # def findWords(self):
     #     words = []
     #     text = open(self.file)
