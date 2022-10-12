@@ -15,16 +15,17 @@ class WordFinder:
 
     def get_lines(self):
         """Open the file passed in. Return a list of lines that are not empty"""
-        # print('test hello world!')
         file = open(self.filepath)
-        # print('file is', file)
+
+        # NOTE some previously tested code. Deprecated
+        # output_lines = []
+        # for line_test in file:
+        #     output_lines.append(line_test)
+
         lines = file.readlines()
-        # for line in file.read():
-        #     print("line is", line)
-        print("lines from readlines", lines)
         text_cleaned = [line[:-1] for line in lines if line[:-1] != ""]
+
         file.close()
-        print(text_cleaned)
         return text_cleaned
 
     def get_words(self, list_lines):
@@ -47,11 +48,11 @@ class SpecialWordFinder(WordFinder):
 
     def __init__(self, filepath):
         """Create a special word finder with an input of file and disregards any empty or comment lines"""
-        super().__init__(self, filepath)
+        super().__init__(filepath)
 
     def get_lines(self):
         """Calls super method of the same name and filters and returns it"""
-        parent_list = self.super().get_lines()
+        parent_list = super().get_lines()
         return [line for line in parent_list if line[0] != "#"]
 
 
